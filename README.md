@@ -18,6 +18,9 @@ options = {
     renderComplete: (treeNodes)=>{ //初始化完成
 
     },
+    nodeExpandBefore: node=>{ //展开收起回调
+
+    }
     nodeExpandAfter: node=>{ //展开收起回调
 
     }

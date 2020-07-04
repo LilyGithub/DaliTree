@@ -37,7 +37,8 @@ export default class DaliTree extends Event {
      * @description 树初始化
      */
     init(){
-        let {dataInterface} = this.options;
+        let {dataInterface, renderDom} = this.options;
+        //初始化节点数据
         if (dataInterface) {
             if (dataInterface instanceof Function) {
                 let nodeDataApi = dataInterface();
@@ -54,6 +55,8 @@ export default class DaliTree extends Event {
                 this._initNodeMap(nodeData);
             }
         }
+        //初始化根节点属性
+        renderDom.setAttribute('class', renderDom.getAttribute('class')+' dali-tree-style');
     }
     /**
      * @description 初始化nodemap,便于后续节点查找速度

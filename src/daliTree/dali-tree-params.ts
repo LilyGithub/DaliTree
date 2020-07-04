@@ -6,6 +6,7 @@ export interface DaliTreeParams {
     loadComplete: Function,
     loadBefore: Function,
     renderComplete: Function,
+    nodeExpandBefore: Function,
     nodeExpandAfter: Function,
     nodeClick: Function,
     nodeDbclick: Function

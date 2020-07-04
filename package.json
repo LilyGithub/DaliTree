@@ -11,7 +11,9 @@
   },
   "author": "王焕章",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "eslint": "^7.4.0"
+  },
   "devDependencies": {
     "@types/html-webpack-plugin": "^3.2.3",
     "@types/lodash": "^4.14.157",

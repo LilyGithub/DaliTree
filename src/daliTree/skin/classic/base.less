@@ -1,0 +1,45 @@
+@font-face {
+    font-family: "iconfont";
+    src: url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAOoAAsAAAAACCwAAANZAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDGgqDRIJ3ATYCJAMUCwwABCAFhG0HZhsJBxFVnCfIfiRUPB66zSYvyJ0XOa1qdSy+CeJT99g+gb8iB4C5SheFCCsk6K67GTdAAAHeo7nhEsqFNIureNU6vZ/47YZ1WiYlQiRELg7HLZuA84FymXtQF8VxQAHuhdEWLpBEPRXwbCb8g30eAnjyK0uaNm/bFYfBmCaAjB01YhAupcbU5AoOISpZa5ClWJyap+4AS/zvy28q50BhNcZFHYc3G0rDb/ab0yEJ+upAGO8yAAtooCwwIL1LzV3RYbgsjdfChpJY1zCBby5J+GZd9mr/8MCgUQhIhJGdFoCGiBj4Zm12LImgREOSghIFiQP3/M+yAHggBgKwHgNblFCZiQadMWs3I24/SmuMHWDWnS2WYc/5PHb9ueLpd57puuP5LsPVp4VMOHjmhE8//9S5wzKk3ojuQ7t37V32rq1P1umvPStsdzw3tpyvkeHo2Xxm45mq6Y+dyz/ArFqVLcOaNTns6tXZ069c2Wv+/mkH4nQL9oW9vnvI8BUoMPIXSx8yyOQMJn3/KFMq49TzwVfZGrZW8UxBw9y2ZcuOoaOTaEOu8utPufi5n5qWz1U7svVOMKpXrwzp58wmTYOflQ3NmOEwmn3V/yreqfhP3/EXF0xUg9t33LpwJ9+fupPaP5HKDixKlynvfLze7f7zJ1HI/ztbR607lFhvzG31uXx5WapNASC5oM32hj75mj6la0d/6rU65+f7Dfd3VGMHZKj7n4sNAK8z75gJV3LB0C8Dh4LWnI/FadlmdJ6hsUZtttmqxVIzMR0FeDyQYNgzezeONRtio+BEDkCRIh9oHEURBlMWLDFVIcLRAABeGbvNsSxIkywNUNqbQGT0ASW986Bl9EUYzA+s7P4QyVgTvO4t94wVLxisCC1GF+wnBE6WCkvHgyD3iF4VW5Tk+aQrUhn4QJWUbGyHKdIYC8qbpzELEJQlsKXLMI4zyCkL0WHJZ851WRZlN5KcLKkNNEGQhSEXsD2BgCOTEm5vNsh9/gh5KjEL1bTU6K8QKQWDA5VEaYHYidNWLddyTenGo2FMAALJJMCWjCg2wxmQl48KIQeT+D2COZ3MdBJtxdL80uQZ9wGecaZNiRYjViIyvLLSF94xCCQTT/pMErsvf1JkBdP9+bQ6nA0yqbUaAAAA') format('woff2');
+}
+
+.dali-tree-style{
+    width: 600px;
+    height: 800px;
+    overflow: auto;
+    li {
+        list-style: none;
+        line-height: 30px;
+    }
+    li>ul{
+        list-style: none;
+        padding:0;
+        margin:0;
+        padding-left:30px;
+    }
+    .base-inon{
+        font-family: "iconfont" !important;
+        font-size: 20px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        margin-right: 6px;
+        cursor:pointer;
+    }
+    .dali-expand:before{
+        content: "\e605";
+        .base-inon;
+    }
+    .dali-un-expand:before{
+        content: "\e606";
+        .base-inon;
+    }
+    .dali-un-checked:before{
+        content: "\e608";
+        .base-inon;
+    }
+    .dali-checked:before{
+        content: "\e607";
+        .base-inon;
+    }
+}
