@@ -1,7 +1,7 @@
 --
 options = {
     renderDom: domNode,
-    type: 'async / sync',
+    loadType: 'async / sync',
     lazyRender: {
         time: 200, //休息时间
         maxNum: 1000, //一次渲染数量
@@ -15,7 +15,7 @@ options = {
     loadBefore: (treeNodes)=>{ //每次加载数据之前
 
     },
-    initCompete: (treeNodes)=>{ //初始化完成
+    renderComplete: (treeNodes)=>{ //初始化完成
 
     },
     nodeExpandAfter: node=>{ //展开收起回调

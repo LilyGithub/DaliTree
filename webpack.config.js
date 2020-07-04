@@ -34,11 +34,13 @@ module.exports = {
     
     },
     resolve: {
+        extensions: ['.js', '.ts'],
         mainFiles:["index", "default"] ,
         alias: {
             wmap: path.join(__dirname, 'src'),
             index: path.resolve(__dirname, 'src','deom'),
-            daliTree: path.resolve(__dirname, 'src','daliTree')
+            daliTree: path.resolve(__dirname, 'src','daliTree'),
+            dictionnary: path.resolve(__dirname, 'src','daliTree', 'dictionnary'),
         }
     },
     module: {
@@ -47,7 +49,13 @@ module.exports = {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/
-            },{
+            },
+            {
+                test: /\.tsx?$/,
+    　　　　    use: 'ts-loader',
+    　　　　　　exclude: /node_modules/
+            },
+            {
                 test: /\.less$/,
                 exclude: /node_modules/,
                 loader: ExTextPlg.extract({

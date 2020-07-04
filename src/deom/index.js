@@ -48,7 +48,9 @@ let getTreeNode = nodeId =>{
         }]
     }
     return new Promise(resolv => {
-        resolv(data)
+        setTimeout(()=>{
+            resolv(data)
+        }, 3000);
     })
     /* let treeNode = [];
     if(!nodeId){
@@ -97,7 +99,19 @@ setTimeout(()=>{
             time: 1000,
             maxNum: 1000
         }, */
-        dataInterface: getTreeNode
+        dataInterface: getTreeNode,
+        loadBefore: (node)=> {
+            console.info('loadBefore');
+            console.info(node);
+        },
+        loadComplete: (node, data)=> {
+            console.info('loadComplete');
+            console.info(node);
+            console.info(data);
+        },
+        renderComplete: (nodes)=> {
+            console.info('renderComplete');
+            console.info(nodes);
+        }
     });
 },100)
-alert("jj")
