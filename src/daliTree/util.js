@@ -6,5 +6,8 @@ export const Util = {
                 s();
             },ss)
         })
+    },
+    getRandom(n){
+        return Math.random()*Math.pow(10, n);
     }
 }
