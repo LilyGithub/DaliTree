@@ -111,7 +111,7 @@ export default class DaliTree extends Event {
      * @description 渲染树节点
      * @param {*} opt 
      */
-    _renderNodes(opt){
+    async _renderNodes(opt){
         let {nodes, renderDom} = opt;
         if(!nodes){
             return;
@@ -123,7 +123,7 @@ export default class DaliTree extends Event {
     /**
      * @description 渲染到临时dom，一次性渲染到真实dom，减少浏览器重排重绘次数
      */
-    _generateRenderNodes(nodes, renderDom){
+    async _generateRenderNodes(nodes, renderDom){
         if(!nodes){
             return;
         }
@@ -134,7 +134,7 @@ export default class DaliTree extends Event {
     /*
     * 深度优先遍历渲染node
     */
-    _depthLoopNode(node, renderDom){
+   async _depthLoopNode(node, renderDom){
         let {options} = this;
         let {dataInterface} = options;
          //节点dom
@@ -183,16 +183,34 @@ export default class DaliTree extends Event {
         //渲染label
         this._renderLabelDom(node, renderDom);
     }
+    /**
+     * 
+     * @param node 
+     * @param renderDom 
+     */
+    async _expandNodesAgent(opt) {
+        let {options} = this;
+        let {expandStatus, node, renderDom} = opt;
+        let returnStatus = options.nodeExpandBefore && options.nodeExpandBefore(node);
+        if (returnStatus !== false) {
+            if(expandStatus){
+                await this._expandNodes(node, renderDom);
+            }else{
+                this._unExpandNodes(node, renderDom);
+            }
+            options.nodeExpandAfter && options.nodeExpandAfter(node);
+        }
+    }
     /*
     *  展开节点
     */
-    _expandNodes(node, renderDom){
+    async _expandNodes(node, renderDom){
         renderDom.innerHTML = '';
         this._renderMainLabel(node, renderDom);
         //子节点
         let childsDom = document.createElement('ul');
         childsDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.childs);
-        this._renderNodes({
+        await this._renderNodes({
             renderId: node.id,
             nodes: node.childNodes, 
             renderDom: childsDom
@@ -263,7 +281,7 @@ export default class DaliTree extends Event {
     }
    /******************************************************************************event****************************** */
     /**
-     * @description 点击事件 事件代理
+     * @description 事件代理
      * @param {*} e 
      */
    _bindEvnetAgent() {
@@ -279,34 +297,76 @@ export default class DaliTree extends Event {
                 case DOM_TYPE.check_box:
                     _this._evnetTrigger_check(e);
                     break;
+                case DOM_TYPE.label:
+                    _this._eventTrigger_node_click(e);
+                    break;
             }
         });
+        renderDom.addEventListener("dblclick", e => {
+            let srcElemt = e.srcElement;
+            let daliType = srcElemt.getAttribute(DOM_ATTR.dali_type);
+            switch (daliType) {
+                case DOM_TYPE.label:
+                    _this._eventTrigger_node_dbclick(e);
+                    break;
+            }
+        });
+    }
+    /**
+     * @description 点击事件 节点点击事件
+     * @param {*} e 
+     */
+    _eventTrigger_node_click(e) {
+        let { node } = this._analysisEventObject(e);
+        this.options.nodeClick && this.options.nodeClick(node);
+    }
+    /**
+     * @description 点击事件 节点双击事件
+     * @param {*} e 
+     */
+    _eventTrigger_node_dbclick(e) {
+        let { node } = this._analysisEventObject(e);
+        this.options.nodeDbclick && this.options.nodeDbclick(node);
     }
     /**
      * @description 点击事件 点击展开收起按钮
      * @param {*} e 
      */
     _evnetTrigger_expand(e) {
-        let srcElemt = e.srcElement;
-        let nodeDom = srcElemt.parentNode;
-        let daliId = nodeDom.getAttribute(DOM_ATTR.dali_id);
-        let node = this.nodesMap[daliId];
+        let { node, nodeDom } = this._analysisEventObject(e);
         node.expand = !node.expand;
-        if(node.expand){
-            this._expandNodes(node, nodeDom);
-        }else{
-            this._unExpandNodes(node, nodeDom);
-        }
+        this._expandNodesAgent({
+            expandStatus: node.expand,
+            renderDom: nodeDom,
+            node
+        });
     }
      /**
      * @description 点击事件 点击check框
      * @param {*} e 
      */
     _evnetTrigger_check(e) {
+        let { node } = this._analysisEventObject(e);
+        let retrunStatus = this.options.checkBefore && this.options.checkBefore(node);
+        if (retrunStatus !== false) {
+            this._checkNode(node, !node.checked);
+            this.options.checkAfter && this.options.checkAfter(node);
+        }
+    }
+    /**
+     * @description 解析事件对象e，获取到事件节点对象node,目标节点等
+     * 
+     */
+    _analysisEventObject(e) {
         let srcElemt = e.srcElement;
         let nodeDom = srcElemt.parentNode;
         let daliId = nodeDom.getAttribute(DOM_ATTR.dali_id);
         let node = this.nodesMap[daliId];
-        this._checkNode(node, !node.checked);
+        return {
+            srcElemt,
+            nodeDom,
+            daliId,
+            node
+        }
     }
 }

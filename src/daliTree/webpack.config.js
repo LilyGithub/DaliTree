@@ -3,8 +3,6 @@ const outPath = "build";
 const debugPath = "dist";
 const path = require('path');
 const webpack = require('webpack');
-const ExTextPlg = require("extract-text-webpack-plugin");
-const HtmlPlg = require('html-webpack-plugin');
 
 var DEBUG = true;
 if(process.env.NODE_ENV == 'production'){
@@ -37,10 +35,7 @@ module.exports = {
         extensions: ['.js', '.ts'],
         mainFiles:["index", "default"] ,
         alias: {
-            wmap: path.join(__dirname, 'src'),
-            index: path.resolve(__dirname, 'src','deom'),
-            daliTree: path.resolve(__dirname, 'src','daliTree','src'),
-            dictionnary: path.resolve(__dirname, 'src','daliTree', 'dictionnary'),
+            index: path.resolve(__dirname, 'src')
         }
     },
     module: {
@@ -48,10 +43,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 loader: 'babel-loader',
-                exclude: /node_modules/,
-                query: {
-                    presets: ['latest'] //按照最新的ES6语法规则去转换
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.tsx?$/,
@@ -61,33 +53,27 @@ module.exports = {
             {
                 test: /\.less$/,
                 exclude: /node_modules/,
-                loader: ExTextPlg.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                minimize: false
-                            }
-                        },{
-                            loader: 'less-loader'
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: false
                         }
-                    ]
-                })
+                    },{
+                        loader: 'less-loader'
+                    }
+                ]
             },{
                 test: /\.css$/,
                 exclude: /node_modules/,
-                loader: ExTextPlg.extract({
-                    fallback: 'style-loader',
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                minimize: false
-                            }
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: false
                         }
-                    ]
-                })
+                    }
+                ]
             },{
                 test: /\.(png|jpg|gif|svg)$/,
                 loader: 'url-loader',
@@ -98,19 +84,5 @@ module.exports = {
                 }
             }
         ]
-    },
-    plugins: [
-        new ExTextPlg("[name].css"),
-        new HtmlPlg({
-            alwaysWriteToDisk: true,
-            title: projectName,
-            template: `./src/deom/index.html`,//PS:相对目录是命令的执行位置
-            filename: `index.html`,//PS:相对目录是output的path位置
-            inject: "body",
-            debug: DEBUG,
-            isHashHistory: true,
-            chunks: ['index'],
-            xhtml: true
-        })
-    ]
+    }
 }

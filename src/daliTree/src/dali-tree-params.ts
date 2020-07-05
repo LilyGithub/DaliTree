@@ -9,6 +9,8 @@ export interface DaliTreeParams {
     nodeExpandBefore: Function,
     nodeExpandAfter: Function,
     nodeClick: Function,
-    nodeDbclick: Function
+    nodeDbclick: Function,
+    checkBefore: Function,
+    checkAfter: Function
 }
 export enum LoadType {async = 'async', sync = 'sync'};
