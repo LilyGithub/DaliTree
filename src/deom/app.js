@@ -137,18 +137,13 @@ export class App extends React.Component{
                     <div class="center-content">
                         <h1 class="title-h1">Dali Tree</h1>
                         <p class="content-p">A JavaScript library for building rich tree</p>
-                        <div class="css-v4xx2e css-1k80xq8">
-                            <div class="css-1ezwgyu">
-                                <a class="css-1053yfl" href="/docs/getting-started.html">Get Started</a>
-                            </div>
-                            <div class="css-1ezwgyu">
-                                <a class="css-13foh4g" href="/tutorial/tutorial.html">Take the Tutorial<svg height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4.53657 8.69699" class="css-b7q1rs"><path d="
-                                    M.18254,8.697a.18149.18149,0,0,1-.12886-.31034L4.09723,4.34126.05369.29954a.18149.18149,
-                                    0,0,1,.2559-.2559L4.4838,4.21785a.18149.18149,0,0,1,0,.2559L.30958,8.648A.18149.18149,
-                                    0,0,1,.18254,8.697Z
-                                " fill="currentColor"></path></svg>
-                                </a>
-                            </div>
+                        <div class="content-opt">
+                            <a class="button max-button">
+                               开始使用
+                            </a>
+                            {/* <a class="linkTo">
+                               开始使用
+                            </a> */}
                         </div>
                     </div>
                 </div>

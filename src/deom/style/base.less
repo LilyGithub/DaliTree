@@ -8,12 +8,38 @@
     -webkit-font-smoothing: antialiased;
     line-height: 1.15;
 }
+.button{
+    display: inline-block;
+    font-size: 16px;
+    background-color: #59cae9;
+    color: #000000;
+    padding: 10px 25px;
+    white-space: nowrap;
+    transition: background-color 0.2s ease-out;
+    -webkit-transition: background-color 0.2s ease-out;
+}
+.button:hover{
+    background-color: #7cddf8;
+}
+.linkTo{
+    display: inline-block;
+    font-size: 16px;
+    color: #61dafb;
+    transition: color 0.2s ease-out;
+    -webkit-transition: color 0.2s ease-out;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.max-button{
+    font-size: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
 .api-document{
     font-size: 16px;
     a{
         cursor: pointer;
         text-decoration: none !important;
-        background-color: transparent;
     }
     h1{
         display: block;
@@ -110,7 +136,7 @@
         background-color: #282c34;
         color: #ffffff;
         .center-content{
-            padding-top: 95px;
+            padding-top: 135px;
             padding-bottom: 85px;
             max-width: 1500px;
             margin-left: auto;
@@ -132,6 +158,12 @@
                 font-size: 24px;
                 letter-spacing: 0.01em;
                 font-weight: 200;
+            }
+            .content-opt{
+                display: flex;
+                padding-top: 65px;
+                justify-content: center;
+                align-items: center;
             }
         }
     }
