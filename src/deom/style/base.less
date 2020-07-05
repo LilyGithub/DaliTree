@@ -1,7 +1,138 @@
+*{
+    padding:0;
+    margin:0; 
+    box-sizing: border-box;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.15;
+}
 .api-document{
     font-size: 16px;
-    padding-left: 350px;
-    padding-top: 250px;
+    a{
+        cursor: pointer;
+        text-decoration: none !important;
+        background-color: transparent;
+    }
+    h1{
+        display: block;
+        font-size: 2em;
+        margin-block-start: 0.67em;
+        margin-block-end: 0.67em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+    .per6{
+        width: calc(100% / 6);
+    }
+    .main-header{
+        background-color: #20232a;
+        color: #ffffff;
+        position: fixed;
+        z-index: 99;
+        width: 100%;
+        top: 0;
+        left: 0;
+        .header-guid-contain{
+            max-width: 1260px;
+            width: 90%;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            .header-guid{
+                display: flex;
+                height: 60px;
+                flex-direction: row;
+                align-items: center;
+            }
+            .logo-link{
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                margin-right: 10px;
+                height: 100%;
+                align-items: center;
+                color: #61dafb;
+                -webkit-box-align: center;
+                -webkit-align-items: center;
+                cursor: pointer;
+                img{
+                    display: inline-block;
+                    vertical-align: top;
+                    height: 60px;
+                }
+                .logo-name{
+                    color: inherit;
+                    margin-left: 10px;
+                    font-weight: 700;
+                    font-size: 20px;
+                    line-height: 20px;
+                }
+            }
+            nav{
+                flex: 1;
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                height: 100%;
+                scrollbar-width: none;
+                .nav-item{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    color: #ffffff;
+                    transition: color 0.2s ease-out;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                    font-weight: 300;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    font-size: 18px;
+                    &:hover{
+                        color: #48bfe0;
+                    }
+                }
+            }
+        }
+    }
+    .top-content{
+        width: 100%;
+        background-color: #282c34;
+        color: #ffffff;
+        .center-content{
+            padding-top: 95px;
+            padding-bottom: 85px;
+            max-width: 1500px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            .title-h1{
+                color: #61dafb;
+                text-align: center;
+                margin: 0;
+                font-size: 45px;
+                letter-spacing: 0.01em;
+                font-size: 60px;
+            }
+            .content-p{
+                padding-top: 20px;
+                font-size: 30px;
+                padding-top: 15px;
+                text-align: center;
+                font-size: 24px;
+                letter-spacing: 0.01em;
+                font-weight: 200;
+            }
+        }
+    }
     .deom-case{
         width: 100%;
         height: auto;

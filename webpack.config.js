@@ -18,8 +18,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, DEBUG?debugPath:outPath), // 输出的路径
        // publicPath: '/icommunity-overview/', // 输出的路径
-        sourceMapFilename: 'maps/[name].map',
-        filename: '[name].js'  // 打包后文件
+        //sourceMapFilename: 'maps/[name].map',
+        chunkFilename: "[name].index.js"
     },
     devtool: DEBUG ? 'inline-source-map':"inline-source-map",
     devServer: {
@@ -35,12 +35,12 @@ module.exports = {
     },
     resolve: {
         extensions: ['.js', '.ts'],
-        mainFiles:["index", "default"] ,
+        mainFiles:["index", "daliTree", "ace"] ,
         alias: {
             wmap: path.join(__dirname, 'src'),
             index: path.resolve(__dirname, 'src','deom'),
             daliTree: path.resolve(__dirname, 'src','daliTree','src'),
-            dictionnary: path.resolve(__dirname, 'src','daliTree', 'dictionnary'),
+            ace: path.resolve(__dirname, 'src','deom','lib','ace.js')
         }
     },
     module: {
@@ -99,6 +99,27 @@ module.exports = {
             }
         ]
     },
+    optimization: {
+		splitChunks: {
+            cacheGroups: { 
+                commons: {
+                    name: "index",
+                    chunks: "all", 
+                    minSize: 5,
+                    maxSize: 10,
+                    priority: 0 
+                },
+                vendor: { 
+                    name: 'vendor',
+                    test: /[\\/]node_modules[\\/]/,
+                    chunks: 'all', 
+                    minSize: 5,
+                    maxSize: 10,
+                    priority: 10 
+                }
+            }
+        }
+	},
     plugins: [
         new ExTextPlg("[name].css"),
         new HtmlPlg({
@@ -109,7 +130,7 @@ module.exports = {
             inject: "body",
             debug: DEBUG,
             isHashHistory: true,
-            chunks: ['index'],
+            chunks: ['index','ace'],
             xhtml: true
         })
     ]

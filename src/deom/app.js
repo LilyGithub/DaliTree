@@ -4,6 +4,7 @@ import './style/base.less';
 const ace = require('./lib/ace/ace.js');
 require('./lib/ace/mode-javascript');
 require('./lib/ace/theme-xcode');
+const logo = require('./style/img/logo.png');
 export class App extends React.Component{
     constructor(props) {
         super(props);
@@ -116,6 +117,41 @@ export class App extends React.Component{
     render(){
         return (
             <div class="api-document">
+                <header class="main-header">
+                    <div class="header-guid-contain">
+                        <div class="header-guid"> 
+                            <a class="logo-link per6"> 
+                                <img src={logo} alt="" height="20"></img>
+                                <span class="logo-name">Dali</span>
+                            </a>
+                            <nav class="css-79txt3">
+                                <a class="nav-item" href="/docs/getting-started.html">文档</a>
+                                <a class="nav-item" href="/tutorial/tutorial.html">使用指南</a>
+                                <a class="nav-item" href="/blog/">博客</a>
+                                <a class="nav-item" href="/community/support.html">支持作者</a>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+                <div class="top-content">
+                    <div class="center-content">
+                        <h1 class="title-h1">Dali Tree</h1>
+                        <p class="content-p">A JavaScript library for building rich tree</p>
+                        <div class="css-v4xx2e css-1k80xq8">
+                            <div class="css-1ezwgyu">
+                                <a class="css-1053yfl" href="/docs/getting-started.html">Get Started</a>
+                            </div>
+                            <div class="css-1ezwgyu">
+                                <a class="css-13foh4g" href="/tutorial/tutorial.html">Take the Tutorial<svg height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4.53657 8.69699" class="css-b7q1rs"><path d="
+                                    M.18254,8.697a.18149.18149,0,0,1-.12886-.31034L4.09723,4.34126.05369.29954a.18149.18149,
+                                    0,0,1,.2559-.2559L4.4838,4.21785a.18149.18149,0,0,1,0,.2559L.30958,8.648A.18149.18149,
+                                    0,0,1,.18254,8.697Z
+                                " fill="currentColor"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="deom-case">
                     <pre id="editor" class="case-code" >
                         {'function foo(items) {\n' +
