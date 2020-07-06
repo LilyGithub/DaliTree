@@ -3,7 +3,7 @@ import {DaliTree} from 'daliTree';
 import './style/base.less';
 const ace = require('./lib/ace/ace.js');
 require('./lib/ace/mode-javascript');
-require('./lib/ace/theme-xcode');
+require('./lib/ace/theme-ambiance');
 const logo = require('./style/img/logo.png');
 export class App extends React.Component{
     constructor(props) {
@@ -109,9 +109,23 @@ export class App extends React.Component{
                 console.info(node);
             }
         });
+        let daliTree2 = new DaliTree({
+            renderDom: document.getElementById('daliTree2'),
+            dataInterface: this.getTreeNode
+        });
+        let daliTree3 = new DaliTree({
+            renderDom: document.getElementById('daliTree3'),
+            dataInterface: this.getTreeNode
+        });
         var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/xcode");
+        editor.setTheme("ace/theme/ambiance");
         editor.session.setMode("ace/mode/javascript");
+        var editor2 = ace.edit("editor2");
+        editor2.setTheme("ace/theme/ambiance");
+        editor2.session.setMode("ace/mode/javascript");
+        var editor3 = ace.edit("editor3");
+        editor3.setTheme("ace/theme/ambiance");
+        editor3.session.setMode("ace/mode/javascript");
     }
 
     render(){
@@ -148,19 +162,53 @@ export class App extends React.Component{
                     </div>
                 </div>
                 <div class="deom-case">
-                    <pre id="editor" class="case-code" >
-                        {'function foo(items) {\n' +
-                            'var i;\n' +
-                            'for (i = 0; i &lt; items.length; i++) {\n' +
-                                'alert("Ace Rocks " + items[i]);\n' +
-                            '}\n' +
-                        '}\n'}
-                    </pre>
+                    <div class="case-code">
+                        <div class="code-title">CODE EDITOR</div>
+                        <pre id="editor" class="code-tool" >
+                            {'\nfunction foo(items) {\n' +
+                                '    var i;\n' +
+                                '    for (i = 0; i &lt; items.length; i++) {\n' +
+                                '        alert("Ace Rocks " + items[i]);\n' +
+                                '    }\n' +
+                            '}\n'}
+                        </pre>
+                    </div>
                     <div id='daliTree' class='case-view'>
 
                     </div>
                 </div>
-                
+                <div class="deom-case">
+                    <div class="case-code">
+                        <div class="code-title">CODE EDITOR</div>
+                        <pre id="editor2" class="code-tool" >
+                            {'\nfunction foo(items) {\n' +
+                                '    var i;\n' +
+                                '    for (i = 0; i &lt; items.length; i++) {\n' +
+                                '        alert("Ace Rocks " + items[i]);\n' +
+                                '    }\n' +
+                            '}\n'}
+                        </pre>
+                    </div>
+                    <div id='daliTree2' class='case-view'>
+
+                    </div>
+                </div>
+                <div class="deom-case">
+                    <div class="case-code">
+                        <div class="code-title">CODE EDITOR</div>
+                        <pre id="editor3" class="code-tool" >
+                            {'\nfunction foo(items) {\n' +
+                                '    var i;\n' +
+                                '    for (i = 0; i &lt; items.length; i++) {\n' +
+                                '        alert("Ace Rocks " + items[i]);\n' +
+                                '    }\n' +
+                            '}\n'}
+                        </pre>
+                    </div>
+                    <div id='daliTree3' class='case-view'>
+
+                    </div>
+                </div>
             </div>
         )
     }
