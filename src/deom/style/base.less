@@ -12,10 +12,19 @@ html, body{
     width: 100vw;
     min-width: 1024px;
 }
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+.w-p-100{
+    width: 100%;
+}
 .button{
     display: inline-block;
     font-size: 16px;
-    background-color: #59cae9;
+    background-color: rgb(255, 120, 12);
     color: #000000;
     padding: 10px 25px;
     white-space: nowrap;
@@ -23,12 +32,12 @@ html, body{
     -webkit-transition: background-color 0.2s ease-out;
 }
 .button:hover{
-    background-color: #7cddf8;
+    background-color: rgb(247, 133, 39);;
 }
 .linkTo{
     display: inline-block;
     font-size: 16px;
-    color: #61dafb;
+    color: rgb(255, 120, 12);;
     transition: color 0.2s ease-out;
     -webkit-transition: color 0.2s ease-out;
     padding-left: 15px;
@@ -90,7 +99,7 @@ html, body{
                 margin-right: 10px;
                 height: 100%;
                 align-items: center;
-                color: #61dafb;
+                color: rgb(255, 120, 12);;
                 -webkit-box-align: center;
                 -webkit-align-items: center;
                 cursor: pointer;
@@ -131,7 +140,7 @@ html, body{
                     padding-right: 20px;
                     font-size: 18px;
                     &:hover{
-                        color: #48bfe0;
+                        color: rgb(255, 120, 12);;
                     }
                 }
             }
@@ -149,7 +158,7 @@ html, body{
             margin-right: auto;
             position: relative;
             .title-h1{
-                color: #61dafb;
+                color: rgb(255, 120, 12);;
                 text-align: center;
                 margin: 0;
                 font-size: 45px;
@@ -179,12 +188,16 @@ html, body{
         display: flex;
         justify-content: space-between;
         padding:100px;
-        width: 50%;
+        width: 70%;
         min-width: 1024px;
         height: 800px;
         margin: auto;
+        .case-describe{
+            width: 25%;
+            padding-right: 20px;
+        }
         .case-code{
-            width: 70%;
+            width: 55%;
             font-size: 16px !important;
             border-radius: 10px;
             display:flex;
@@ -205,11 +218,9 @@ html, body{
             }
         }
         .case-view{
-            width: 30%;
-            background: #ccc;
+            width: 20%;
             padding-left: 50px;
             border: 1px solid rgb(236, 236, 236);
-            background: rgb(236, 236, 236);
             padding-top: 30px;
         }
     }

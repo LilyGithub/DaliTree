@@ -162,6 +162,12 @@ export class App extends React.Component{
                     </div>
                 </div>
                 <div class="deom-case">
+                    <div class="case-describe">
+                        <h3>普通树</h3>
+                        <p>
+                            一般的tree
+                        </p>
+                    </div>
                     <div class="case-code">
                         <div class="code-title">CODE EDITOR</div>
                         <pre id="editor" class="code-tool" >
@@ -174,7 +180,7 @@ export class App extends React.Component{
                         </pre>
                     </div>
                     <div id='daliTree' class='case-view'>
-
+                            
                     </div>
                 </div>
                 <div class="deom-case">
