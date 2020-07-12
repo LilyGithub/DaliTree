@@ -2,11 +2,12 @@ import {Util} from './util';
 import Event from './event';
 import { ERR_CODE, DOM_ATTR, DOM_TYPE} from './dictionnary/index';
 import { LoadType, DaliTreeParams} from './dali-tree-params';
+
 export default class DaliTree extends Event {
     nodes: Array<TreeNode>;
     options: DaliTreeParams;
     nodesMap: Object;
-    
+    _checkParentsTask: any;
     constructor(options){
         super();
         this.nodes = [];
@@ -18,7 +19,7 @@ export default class DaliTree extends Event {
         if (dataInterface instanceof Function) {
             this.options.dataInterface = (node) => {
                 loadBefore && loadBefore(node);
-                let netApi = dataInterface();
+                let netApi = dataInterface(node);
                 if (netApi && netApi.then) {
                     return new Promise(resolve => {
                         netApi.then( data => {
@@ -31,6 +32,7 @@ export default class DaliTree extends Event {
             }
         }
         this.nodesMap = {};
+        this._checkParentsTask = null;
         this.init();
     }
     /**
@@ -62,19 +64,19 @@ export default class DaliTree extends Event {
      * @description 初始化nodemap,便于后续节点查找速度
      * @param {} nodeData 节点构造Object
      */
-    _initNodeMap(nodeData){
+    async _initNodeMap(nodeData){
         if (!(nodeData instanceof Array)) {
             nodeData = [nodeData];
         }
         this.nodes =  nodeData;
-        this._addToNodeMap(nodeData);
+        await this._addToNodeMap(nodeData);
         this.render();
     }
     /**
      * @description 把nodes添加到nodeMap中
      * @param {*} nodes 
      */
-    _addToNodeMap(nodes: Array<TreeNode>){
+    async _addToNodeMap(nodes: Array<TreeNode>){
         if(!nodes || !nodes.length){
             return;
         }
@@ -105,7 +107,7 @@ export default class DaliTree extends Event {
      * @param {*} node 
      */
     _nodeHtmlGenerator(node){
-        return `${node.name}`;
+        return `<span class="dali-tree-label-name">${node.name}</span><span id="${DOM_TYPE.loading}-${node.id}" class="dali-tree-displaynone dali-node-loading"></span>`;
     }
     /**
      * @description 渲染树节点
@@ -116,9 +118,14 @@ export default class DaliTree extends Event {
         if(!nodes){
             return;
         }
-        let fakeDom = document.createElement('div');
-        this._generateRenderNodes(nodes, fakeDom);
-        renderDom.appendChild(fakeDom);
+        if (nodes instanceof Array) { //渲染多个节点
+            let fakeDom = document.createElement('div');
+            renderDom.appendChild(fakeDom);
+            await this._generateRenderNodes(nodes, fakeDom);
+            this._excuteCheckParentsTask();
+        } else { //渲染单给节点
+            this._loadAndGenerateChildNodes(nodes, renderDom);
+        }
     }
     /**
      * @description 渲染到临时dom，一次性渲染到真实dom，减少浏览器重排重绘次数
@@ -135,42 +142,53 @@ export default class DaliTree extends Event {
     * 深度优先遍历渲染node
     */
    async _depthLoopNode(node, renderDom){
-        let {options} = this;
-        let {dataInterface} = options;
          //节点dom
          let currentDom = document.createElement('li');
+         currentDom.setAttribute('id', `${DOM_TYPE.node}-${node.id}`);
          currentDom.setAttribute(DOM_ATTR.dali_id, node.id);
          currentDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.node);
          //渲染label
          this._renderMainLabel(node, currentDom);
          //渲染到当前节点
          if(node.isParent && node.expand){
-             if (options.loadType === LoadType.async) {
-                let dataApi = dataInterface(node);
-                if (dataApi instanceof Promise) {
-                    dataApi.then(data => {
-                        node.childNodes = data;
-                        this._generateChildNodes(node, currentDom);
-                    });
-                } else {
-                    Log.info(ERR_CODE.NEED_PROMISE);
-                }
-             } else {
-                this._generateChildNodes(node, currentDom);
-             }
+            this._loadAndGenerateChildNodes(node, currentDom);
          }
          //渲染到根节点
          renderDom.appendChild(currentDom);
     }
     /**
+     * @description 查询并生成子节点
+     */
+    async _loadAndGenerateChildNodes(node, renderDom) {
+        let {options} = this;
+        let {dataInterface} = options;
+        this._renderLoading(node,true);
+        if (options.loadType === LoadType.async && !node._hasLoadData) {
+            let dataApi = dataInterface(node);
+            if (dataApi instanceof Promise) {
+                dataApi.then(data => {
+                    node._hasLoadData = true;
+                    node.childNodes = data;
+                    this._addToNodeMap(data);
+                    this._generateChildNodes(node, renderDom);
+                });
+            } else {
+                Log.info(ERR_CODE.NEED_PROMISE);
+            }
+        } else {
+            this._generateChildNodes(node, renderDom);
+        }
+    }
+    /**
      * @deprecated 生产孩子节点
      */
-    _generateChildNodes(node, currentDom){
+    async _generateChildNodes(node, currentDom){
         //子节点
         let childsDom = document.createElement('ul');
         childsDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.childs);
         currentDom.appendChild(childsDom);
-        this._generateRenderNodes(node.childNodes, childsDom);
+        await this._generateRenderNodes(node.childNodes, childsDom);
+        this._renderLoading(node,false);
     }
     /*
     * 选中每个node的label部分包括所有按钮
@@ -205,14 +223,20 @@ export default class DaliTree extends Event {
     *  展开节点
     */
     async _expandNodes(node, renderDom){
+        let {options} = this;
         renderDom.innerHTML = '';
         this._renderMainLabel(node, renderDom);
         //子节点
         let childsDom = document.createElement('ul');
         childsDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.childs);
+        let renderNodes = node.childNodes;
+        //异步加载时，未加载数据，渲染本节点
+        if (options.loadType === LoadType.async && !node._hasLoadData) {
+            renderNodes = node;
+        }
         await this._renderNodes({
             renderId: node.id,
-            nodes: node.childNodes, 
+            nodes: renderNodes, 
             renderDom: childsDom
         });
         renderDom.appendChild(childsDom);
@@ -246,6 +270,7 @@ export default class DaliTree extends Event {
         let labelDom = document.createElement('span');
         labelDom.innerHTML = nodeHtmlGenerator(node);
         labelDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.label);
+        labelDom.setAttribute('id', `${DOM_TYPE.label}-${node.id}`);
         renderDom.appendChild(labelDom);
     }
      /*
@@ -257,6 +282,12 @@ export default class DaliTree extends Event {
         checkBoxDom.setAttribute('id', `${DOM_TYPE.check_box}-${node.id}`);
         checkBoxDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.check_box);
         checkBoxDom.setAttribute('class', t);
+        if (node._hasCheckChild) {
+            checkBoxDom.classList.add('dali-has-child-check');
+        } else {
+            checkBoxDom.classList.remove('dali-has-child-check');
+        }
+        node.checked && this._pushCheckParentsTask(node);
         //tagDom.innerText = t;
         renderDom.appendChild(checkBoxDom)
     }
@@ -271,12 +302,91 @@ export default class DaliTree extends Event {
         } else {
             let srcElemt = document.getElementById(`${DOM_TYPE.check_box}-${node.id}`);
             node.checked = checkStatus;
-            node.checkChilds = checkStatus;
             if (srcElemt && srcElemt.setAttribute) {
                 let t = node.checked ? 'dali-checked' : 'dali-un-checked';
                 srcElemt.setAttribute('class', t);
             }
-            node.childNodes && this._checkNode(node.childNodes, checkStatus);
+            if (node.isParent) {
+                node._hasCheckChild = checkStatus;
+                if (checkStatus) {
+                    srcElemt.classList.add('dali-has-child-check');
+                } else {
+                    srcElemt.classList.remove('dali-has-child-check');
+                }
+                node.childNodes && this._checkNode(node.childNodes, checkStatus);
+            }
+        }
+    }
+    /**
+     * @description 提交检查父节点任务
+     */
+    _pushCheckParentsTask(node) {
+        this._checkParentsTask = node;
+    }
+    /**
+     * @description 执行检查父节点任务
+     */
+    _excuteCheckParentsTask(){
+        if (this._checkParentsTask) {
+            this._checkParents(this._checkParentsTask);
+            this._checkParentsTask = null;
+        }
+    }
+    /**
+     * 
+     */
+    _checkParents(node: any) {
+        if(node instanceof HTMLElement) {
+            if (node) {
+                let pType = node.getAttribute(DOM_ATTR.dali_type);
+                if (pType === DOM_TYPE.node) {
+                    let chlidNd:any = node.childNodes;
+                    let checkDom:any = null;
+                    let daliId = node.getAttribute(DOM_ATTR.dali_id);
+                    let nodeData = this.nodesMap[daliId];
+                    let shouldCheck = false;
+                    if (nodeData.childNodes) {
+                        for (let cnd of nodeData.childNodes) {
+                            if (cnd.checked || cnd._hasCheckChild) {
+                                shouldCheck = true;
+                            }
+                        }
+                    }
+                    for (let cd of chlidNd) {
+                        let cdType = cd.getAttribute(DOM_ATTR.dali_type);
+                        if (cdType === DOM_TYPE.check_box) {
+                            checkDom = cd;
+                            break;
+                        }
+                    }
+                    if (shouldCheck) {
+                        checkDom.classList.add('dali-has-child-check');
+                        nodeData._hasCheckChild = true;
+                    } else {
+                        checkDom.classList.remove('dali-has-child-check');
+                        nodeData._hasCheckChild = false;
+                    }
+                }
+                if (node.getAttribute(DOM_ATTR.dali_id) !== DOM_TYPE.root) {
+                    this._checkParents(node.parentNode);
+                }
+            }
+        } else {
+            let srcElemt = document.getElementById(`${DOM_TYPE.node}-${node.id}`);
+            srcElemt && this._checkParents(srcElemt.parentNode);
+        }
+    }
+    /**
+     * @description render节点loading效果
+     */
+    _renderLoading(node, flag) {
+        let nodeDom = document.getElementById(`${DOM_TYPE.label}-${node.id}`);
+        if (nodeDom && flag) {
+            let loadingDom = document.getElementById(`${DOM_TYPE.loading}-${node.id}`);
+            loadingDom && loadingDom.classList && loadingDom.classList.remove('dali-tree-displaynone');
+        } else if(nodeDom && !flag) {
+            let loadingDom = document.getElementById(`${DOM_TYPE.loading}-${node.id}`);
+            loadingDom && loadingDom.classList && loadingDom.classList.add('dali-tree-displaynone');
         }
     }
    /******************************************************************************event****************************** */
@@ -350,6 +460,7 @@ export default class DaliTree extends Event {
         let retrunStatus = this.options.checkBefore && this.options.checkBefore(node);
         if (retrunStatus !== false) {
             this._checkNode(node, !node.checked);
+            this._checkParents(node);
             this.options.checkAfter && this.options.checkAfter(node);
         }
     }

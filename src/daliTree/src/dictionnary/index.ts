@@ -9,5 +9,6 @@ export enum DOM_TYPE {
     check_box = 'check_box',
     node = 'node',
     childs = 'childs',
-    label = 'label'
+    label = 'label',
+    loading = 'loading'
 };

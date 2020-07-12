@@ -7,7 +7,7 @@ class TreeNode {
     expand: Boolean;
     nodeHtmlHandle: Function;
     _hasLoadData: Boolean; //sync时加载状态
-
+    _hasCheckChild: Boolean;
     constructor(){
         
     }

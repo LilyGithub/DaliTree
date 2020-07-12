@@ -40,4 +40,43 @@
         content: "\e607";
         .base-inon;
     }
+    .dali-has-child-check{
+        color: #f29a19;
+    }
+    .dali-node-loading{
+        background: url('./loading.png') center;
+        display: inline-block;
+        margin-left: 6px;
+        width: 21px;
+        height: 21px;
+        vertical-align: text-top;
+        -webkit-transition-property: -webkit-transform;
+        -webkit-transition-duration: 1s;
+        -moz-transition-property: -moz-transform;
+        -moz-transition-duration: 1s;
+        -webkit-animation: rotate 2s linear infinite;
+        -moz-animation: rotate 2s linear infinite;
+        -o-animation: rotate 2s linear infinite;
+        animation: rotate 2s linear infinite;
+    }
+    .dali-tree-displaynone{
+        display:none;
+    }
+    .dali-tree-label-name{
+        vertical-align: top;
+        display: inline-block;
+        height: 21px;
+    }
+    @-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)}
+        to{-webkit-transform: rotate(360deg)}
+    }
+    @-moz-keyframes rotate{from{-moz-transform: rotate(0deg)}
+        to{-moz-transform: rotate(359deg)}
+    }
+    @-o-keyframes rotate{from{-o-transform: rotate(0deg)}
+        to{-o-transform: rotate(359deg)}
+    }
+    @keyframes rotate{from{transform: rotate(0deg)}
+        to{transform: rotate(359deg)}
+    }
 }

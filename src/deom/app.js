@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import '../daliTree/dist/index';
+/* import '../daliTree/src/index'; */
+import DaliTree from '../daliTree/src/dali-tree';
+import '../daliTree/src/skin/classic/base.less';
 import './style/base.less';
 const logo = require('./style/img/logo.png');
 
@@ -7,69 +9,91 @@ export class App extends React.Component{
     constructor(props) {
         super(props);
     }
-    getTreeNode(nodeId){
+    getTreeNode(node){
         let data = {
             id:'root',
             name:'中国',
             isParent: true,
             expand: true,
-            childNodes: [{
-                id:'yunnan',
-                name:'云南',
-                isParent: true,
-                expand: true,
-                childNodes: [{
+            checked: true
+        }
+        if (!node) {
+            return new Promise(resolv => {
+                setTimeout(()=>{
+                    resolv(data)
+                }, 100);
+            })
+        }
+        if(node.id === 'root'){
+            return new Promise(resolv => {
+                setTimeout(()=>{
+                    resolv([{
+                        id:'yunnan',
+                        name:'云南',
+                        isParent: true,
+                        checked: true,
+                        expand: false
+                    },{
+                        id:'zhejiang',
+                        name:'浙江',
+                        isParent: false,
+                        expand: false
+                    }]);
+                }, 100);
+            })
+        } else if (node.id === 'dali') {
+            return new Promise(resolv => {
+                let dat = [{
+                    id:'dali1',
+                    name:'洱源县',
+                    isParent: false,
+                    expand: true
+                },{
+                    id:'dali2',
+                    name:'下关',
+                    isParent: false,
+                    expand: true
+                },{
+                    id:'dali3',
+                    name:'风雨',
+                    isParent: false,
+                    expand: true
+                }];
+                setTimeout(()=>{
+                    resolv(dat)
+                }, 3010);
+            })
+        } else {
+            return new Promise(resolv => {
+                let dat = [{
                     id:'dali',
                     name:'大理',
                     isParent: true,
-                    expand: true,
-                    childNodes: [{
-                        id:'dali1',
-                        name:'洱源县',
-                        isParent: false,
-                        expand: true
-                    },{
-                        id:'dali2',
-                        name:'下关',
-                        isParent: false,
-                        expand: true
-                    },{
-                        id:'dali3',
-                        name:'风雨',
-                        isParent: false,
-                        expand: true
-                    }]
+                    expand: false
                 },{
                     id:'kunming',
                     name:'昆明',
-                    isParent: true,
-                    expand: true,
-                    childNodes: []
-                }]
-            },{
-                id:'zhejiang',
-                name:'浙江',
-                isParent: false,
-                expand: true,
-                childNodes: []
-            }]
+                    isParent: false,
+                    expand: true
+                }];
+                setTimeout(()=>{
+                    resolv(dat)
+                }, 3100);
+            })
         }
-        return new Promise(resolv => {
-            setTimeout(()=>{
-                resolv(data)
-            }, 100);
-        })
+    
     
     }
     componentDidMount() {
         let daliTree = new DaliTree({
             renderDom: document.getElementById('daliTree'),
+            loadType: 'async',
             /* lazyRender: {
                 time: 1000,
                 maxNum: 1000
             }, */
             dataInterface: this.getTreeNode,
-            loadBefore: (node)=> {
+           /*  loadBefore: (node)=> {
                 console.info('loadBefore');
                 console.info(node);
             },
@@ -105,7 +129,7 @@ export class App extends React.Component{
             checkAfter: node=>{
                 console.info('checkAfter');
                 console.info(node);
-            }
+            } */
         });
     }
 
