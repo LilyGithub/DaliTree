@@ -64,25 +64,40 @@
   margin-right: 6px;
   cursor: pointer;
 }
-* {
+*:not(.code-tool) {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  line-height: 1.15;
 }
 html,
 body {
   width: 100vw;
   min-width: 1024px;
+  font-weight: 400;
+  font-style: normal;
+  font: 12px / normal -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, monospace;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.15;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.tp100 {
+  top: -200px;
+}
+.w-p-100 {
+  width: 100%;
+}
+.mt50 {
+  margin-top: 50px;
 }
 .button {
   display: inline-block;
   font-size: 16px;
-  background-color: #59cae9;
+  background-color: #f29a19;
   color: #000000;
   padding: 10px 25px;
   white-space: nowrap;
@@ -90,12 +105,20 @@ body {
   -webkit-transition: background-color 0.2s ease-out;
 }
 .button:hover {
-  background-color: #7cddf8;
+  background-color: #ff780c;
+}
+.normal-text {
+  line-height: 1.7;
+  font-size: 17px;
+}
+.title-text {
+  font-size: 22px;
+  line-height: 1.3;
 }
 .linkTo {
   display: inline-block;
   font-size: 16px;
-  color: #61dafb;
+  color: #f29a19;
   transition: color 0.2s ease-out;
   -webkit-transition: color 0.2s ease-out;
   padding-left: 15px;
@@ -133,6 +156,7 @@ body {
   position: fixed;
   z-index: 99;
   width: 100%;
+  min-width: 1024px;
   top: 0;
   left: 0;
 }
@@ -159,7 +183,7 @@ body {
   margin-right: 10px;
   height: 100%;
   align-items: center;
-  color: #61dafb;
+  color: #f29a19;
   -webkit-box-align: center;
   -webkit-align-items: center;
   cursor: pointer;
@@ -167,7 +191,7 @@ body {
 .api-document .main-header .header-guid-contain .logo-link img {
   display: inline-block;
   vertical-align: top;
-  height: 60px;
+  height: 50px;
 }
 .api-document .main-header .header-guid-contain .logo-link .logo-name {
   color: inherit;
@@ -202,7 +226,7 @@ body {
   font-size: 18px;
 }
 .api-document .main-header .header-guid-contain nav .nav-item:hover {
-  color: #48bfe0;
+  color: #ff780c;
 }
 .api-document .top-content {
   width: 100%;
@@ -218,7 +242,7 @@ body {
   position: relative;
 }
 .api-document .top-content .center-content .title-h1 {
-  color: #61dafb;
+  color: #f29a19;
   text-align: center;
   margin: 0;
   font-size: 45px;
@@ -246,13 +270,26 @@ body {
   display: flex;
   justify-content: space-between;
   padding: 100px;
-  width: 50%;
+  width: 70%;
   min-width: 1024px;
   height: 800px;
   margin: auto;
 }
+.api-document .deom-case .case-describe {
+  width: 25%;
+  padding-right: 50px;
+}
+.api-document .deom-case .case-describe .describe-title {
+  font-size: 22px;
+  line-height: 1.3;
+}
+.api-document .deom-case .case-describe .describe-content {
+  padding-top: 20px;
+  line-height: 1.7;
+  font-size: 17px;
+}
 .api-document .deom-case .case-code {
-  width: 70%;
+  width: 55%;
   font-size: 16px !important;
   border-radius: 10px;
   display: flex;
@@ -261,24 +298,41 @@ body {
 .api-document .deom-case .case-code .code-title {
   width: 100%;
   height: 50px;
-  background: #000;
+  background: #20232a;
   color: #FFF;
   line-height: 50px;
   padding-left: 30px;
+  border-top-left-radius: 20px;
 }
 .api-document .deom-case .case-code .code-tool {
   width: 100%;
   flex: 1;
-  font-size: 16px;
   padding-top: 20px;
+  margin: 0px;
+  font-size: 16px;
+  font: 16px / normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
+  border: 1px solid #ececec;
 }
 .api-document .deom-case .case-view {
-  width: 30%;
-  background: #ccc;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.api-document .deom-case .case-view .view-title {
+  width: 100%;
+  height: 50px;
+  background: #282c34;
+  color: #FFF;
+  line-height: 50px;
+  padding-left: 30px;
+  border-top-right-radius: 20px;
+}
+.api-document .deom-case .case-view .view-content {
+  width: 100%;
+  flex: 1;
   padding-left: 50px;
+  padding-top: 20px;
   border: 1px solid #ececec;
-  background: #ececec;
-  padding-top: 30px;
 }
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJpbmRleC5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

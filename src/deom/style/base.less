@@ -1,16 +1,16 @@
-*{
+*:not(.code-tool){
     padding:0;
     margin:0; 
     box-sizing: border-box;
-    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.15;
 }
 html, body{
     width: 100vw;
     min-width: 1024px;
+    font-weight: 400;
+    font-style: normal;
+    font: 12px/normal -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif, monospace;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.15;
 }
 .relative{
     position: relative;
@@ -18,8 +18,23 @@ html, body{
 .absolute{
     position: absolute;
 }
+.tp100{
+    top: -200px;
+}
 .w-p-100{
     width: 100%;
+}
+.mt50{
+    margin-top: 50px;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.pr30{
+    padding-right: 30px;
 }
 .button{
     display: inline-block;
@@ -33,6 +48,14 @@ html, body{
 }
 .button:hover{
     background-color: rgb(255, 120, 12);
+}
+.normal-text{
+    line-height: 1.7;
+    font-size: 17px;
+}
+.title-text{
+    font-size: 22px;
+    line-height: 1.3;
 }
 .linkTo{
     display: inline-block;
@@ -157,7 +180,6 @@ html, body{
             margin-left: auto;
             margin-right: auto;
             position: relative;
-            background: url('./img/logo-big.png') center no-repeat;
             .title-h1{
                 color: rgb(242, 154, 25);
                 text-align: center;
@@ -195,7 +217,14 @@ html, body{
         margin: auto;
         .case-describe{
             width: 25%;
-            padding-right: 20px;
+            padding-right: 50px;
+            .describe-title{
+                .title-text;
+            }
+            .describe-content{
+                padding-top: 20px;
+                .normal-text;
+            }
         }
         .case-code{
             width: 55%;
@@ -206,23 +235,42 @@ html, body{
             .code-title{
                 width: 100%;
                 height: 50px;
-                background:#000;
+                background:#20232a;
                 color: #FFF;
                 line-height: 50px;
                 padding-left: 30px;
+                border-top-left-radius: 20px;
             }
             .code-tool{
                 width:100%;
                 flex:1;
-                font-size: 16px;
                 padding-top: 20px;
+                margin:0px;
+                font-size: 16px;
+                font: 16px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
+                border: 1px solid rgb(236, 236, 236);
             }
         }
         .case-view{
             width: 20%;
-            padding-left: 50px;
-            border: 1px solid rgb(236, 236, 236);
-            padding-top: 30px;
+            display: flex;
+            flex-direction: column;
+            .view-title{
+                width: 100%;
+                height: 50px;
+                background:#282c34;
+                color: #FFF;
+                line-height: 50px;
+                padding-left: 30px;
+                border-top-right-radius: 20px;
+            }
+            .view-content{
+                width: 100%;
+                flex: 1;
+                padding-left: 50px;
+                padding-top: 20px;
+                border: 1px solid rgb(236, 236, 236);
+            }
         }
     }
 }

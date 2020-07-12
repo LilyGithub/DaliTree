@@ -3,6 +3,7 @@ const outPath = "build";
 const debugPath = "dist";
 const path = require('path');
 const webpack = require('webpack');
+const ExTextPlg = require("extract-text-webpack-plugin");
 
 var DEBUG = true;
 if(process.env.NODE_ENV == 'production'){
@@ -11,7 +12,7 @@ if(process.env.NODE_ENV == 'production'){
 
 module.exports = {
     entry: {
-        index:'index'
+        dalitree:'dalitree'
     },
     output: {
         path: path.resolve(__dirname, DEBUG?debugPath:outPath), // 输出的路径
@@ -35,7 +36,7 @@ module.exports = {
         extensions: ['.js', '.ts'],
         mainFiles:["index", "default"] ,
         alias: {
-            index: path.resolve(__dirname, 'src')
+            dalitree: path.resolve(__dirname, 'src')
         }
     },
     module: {
@@ -53,16 +54,9 @@ module.exports = {
             {
                 test: /\.less$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            minimize: false
-                        }
-                    },{
-                        loader: 'less-loader'
-                    }
-                ]
+                use: ExTextPlg.extract({
+                    use: ['css-loader', 'less-loader']
+                  })
             },{
                 test: /\.css$/,
                 exclude: /node_modules/,
@@ -84,5 +78,8 @@ module.exports = {
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new ExTextPlg("[name].css")
+    ]
 }
