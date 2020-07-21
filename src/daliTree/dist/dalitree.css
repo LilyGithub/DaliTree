@@ -64,5 +64,64 @@
   margin-right: 6px;
   cursor: pointer;
 }
+.dali-tree-style .dali-has-child-check {
+  color: #f29a19;
+}
+.dali-tree-style .dali-node-loading {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAB7UlEQVQ4T7WUwUsbQRTG39s1QWx3TUDiZptCoUev/gERhN4qHixeG8nGxEOFgidBxaOteAvZpaXQnpqTFy9C9Sb9B3prtS1NJkGI3bVBxJ1XRtiQLEmYQLLH2W9+873vzTyEEXw4AiZIQ13H/KxnKy9kTPSEeo6xFeH803iu/r1RNNKqiie+T3PxPDu9KSWe3qKyqCD/+DBbr4UP6gl17aQNQNO6xRbCUNc2DhHwXLOq692c94RSCSIeJj0gXPY5vwqcqooSAyQHfT6j5Wt1Ab12EtPtjjugomTimOJ+ZCNW+NXwbKNAqKRFluKflmU7IltOdByzqs6/0lSSY3STgJ/rFnsTuO6Aurb5nIAKCPAMkbYFpPnefDyRqfwONjSKxpN4nl14jrFGhLsA8CU6xjfGM7UfXaHB4l/bXEaOP/XVP2fdMhMH3fnwlnz+YXKVHfVtlGiIEIgOy1ydQB/e0ypfZAVES0IQlN4PfJ8/4XZLg1gO7nFHpkN3KlOurKbD6ZVtzqtABwT0VbfYiiykb6NETpyUhB6JvsaXFzdDgYYhXslY0nKsPCi8z9s39wBoVreqc92grmOu6NnKO+m3f//8lDELVChrGfYtPFCazqPUHdC+ym9fPchdVqWnVFg4lHk6aI7teunJP8gh/wEGi+QWs3J0GQAAAABJRU5ErkJggg==) center;
+  display: inline-block;
+  margin-left: 6px;
+  width: 21px;
+  height: 21px;
+  vertical-align: text-top;
+  -webkit-transition-property: -webkit-transform;
+  -webkit-transition-duration: 1s;
+  -moz-transition-property: -moz-transform;
+  -moz-transition-duration: 1s;
+  -webkit-animation: rotate 2s linear infinite;
+  -moz-animation: rotate 2s linear infinite;
+  -o-animation: rotate 2s linear infinite;
+  animation: rotate 2s linear infinite;
+}
+.dali-tree-style .dali-tree-displaynone {
+  display: none;
+}
+.dali-tree-style .dali-tree-label-name {
+  vertical-align: top;
+  display: inline-block;
+  height: 21px;
+}
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes rotate {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-o-keyframes rotate {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
 
 /*# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJkYWxpdHJlZS5jc3MiLCJzb3VyY2VSb290IjoiIn0=*/

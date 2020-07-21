@@ -3,6 +3,7 @@ export {
     ERR_CODE
 }
 export enum DOM_ATTR {dali_type = 'dali_type', dali_id = 'dali_id'};
+export enum PAGER {server='server', client='client'};
 export enum DOM_TYPE {
     root = 'root',
     expand = 'expand',
@@ -10,5 +11,6 @@ export enum DOM_TYPE {
     node = 'node',
     childs = 'childs',
     label = 'label',
-    loading = 'loading'
+    loading = 'loading',
+    pagination = 'pagination'
 };

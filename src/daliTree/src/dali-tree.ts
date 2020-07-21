@@ -1,7 +1,7 @@
-import {Util} from './util';
-import Event from './event';
+import {Util} from './util/util';
+import Event from './common/event';
 import { ERR_CODE, DOM_ATTR, DOM_TYPE} from './dictionnary/index';
-import { LoadType, DaliTreeParams} from './dali-tree-params';
+import { LoadType, DaliTreeParams} from './entity/dali-tree-params';
 
 export default class DaliTree extends Event {
     nodes: Array<TreeNode>;
@@ -106,7 +106,7 @@ export default class DaliTree extends Event {
      * @description 默认的节点node节点标签生成器
      * @param {*} node 
      */
-    _nodeHtmlGenerator(node){
+    _nodeDomGenerator(node){
         return `<span class="dali-tree-label-name">${node.name}</span><span id="${DOM_TYPE.loading}-${node.id}" class="dali-tree-displaynone dali-node-loading"></span>`;
     }
     /**
@@ -266,9 +266,10 @@ export default class DaliTree extends Event {
     *  渲染label
     */
     _renderLabelDom(node, renderDom) {
-        let nodeHtmlGenerator = node.nodeHtmlGenerator || this._nodeHtmlGenerator;
+        let {nodeDomGenerator} = this.options;
+        nodeDomGenerator = nodeDomGenerator || this._nodeDomGenerator;
         let labelDom = document.createElement('span');
-        labelDom.innerHTML = nodeHtmlGenerator(node);
+        labelDom.innerHTML = nodeDomGenerator(node);
         labelDom.setAttribute(DOM_ATTR.dali_type, DOM_TYPE.label);
         labelDom.setAttribute('id', `${DOM_TYPE.label}-${node.id}`);
         renderDom.appendChild(labelDom);

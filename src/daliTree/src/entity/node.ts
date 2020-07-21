@@ -8,7 +8,13 @@ class TreeNode {
     nodeHtmlHandle: Function;
     _hasLoadData: Boolean; //sync时加载状态
     _hasCheckChild: Boolean;
+    pagination: NodePagination;
     constructor(){
         
     }
+}
+interface NodePagination {
+    currentPage: Number,
+    pageSize: Number,
+    total: Number
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 /* import '../daliTree/src/index'; */
-import DaliTree from '../daliTree/src/dali-tree';
+import {DaliTree, DaliPaginationTree} from '../daliTree/src';
 import '../daliTree/src/skin/classic/base.less';
 import './style/base.less';
 const logo = require('./style/img/logo.png');
@@ -85,7 +85,7 @@ export class App extends React.Component{
     
     }
     componentDidMount() {
-        let daliTree = new DaliTree({
+        let daliTree = new DaliPaginationTree({
             renderDom: document.getElementById('daliTree'),
             loadType: 'async',
             /* lazyRender: {
